@@ -20,6 +20,11 @@ A more comprehensive Checkpoint, Vae loader with afew other features such as cli
 Combined Positive and Negative Prompts, Just to save some room.
 
 
+### ImageTool
+
+Uses PIL for some simple image manipulation. 
+
+
 ## Installation
 
 download the repo to the custom_nodes directory. eg.
