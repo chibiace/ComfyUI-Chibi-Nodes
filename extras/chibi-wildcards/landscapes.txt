@@ -1,0 +1,51 @@
+Mountains
+Valleys
+Deserts
+Beaches
+Forests
+Meadows
+Hills
+Canyons
+Tundra
+Glaciers
+Swamps
+Jungles
+Savannas
+Plateaus
+Islands
+Prairies
+Waterfalls
+Volcanoes
+Caves
+Coral reefs
+Urban landscapes
+Rivers
+Lakes
+Ponds
+Fjords
+Cliffs
+Oases
+Marshes
+Wetlands
+Archipelagos
+Badlands
+Dunes
+Vineyards
+Terraced fields
+Countryside
+Farmlands
+Tropical rainforests
+Taigas
+Steppes
+Highlands
+Barren wastelands
+Craters
+Lava fields
+Alpine meadows
+Boreal forests
+Rocky shores
+Mangroves
+Estuaries
+Salt flats
+Arid plateaus
+Polar ice caps

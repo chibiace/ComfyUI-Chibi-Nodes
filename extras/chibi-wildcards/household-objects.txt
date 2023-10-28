@@ -1,0 +1,50 @@
+Refrigerator
+Toaster
+Blender
+Microwave
+Coffee maker
+Dishwasher
+Washing machine
+Dryer
+Television
+Vacuum cleaner
+Sofa
+Dining table
+Chair
+Bed
+Wardrobe
+Mirror
+Clock
+Lamp
+Picture frame
+Curtains
+Bookshelf
+Trash can
+Kitchen sink
+Cutting board
+Utensil set
+Iron
+Ironing board
+Hairdryer
+Towel rack
+Showerhead
+Toilet
+Bathtub
+Soap dispenser
+Toothbrush holder
+Toilet paper holder
+Hand towel
+Bath towel
+Frying pan
+Cooking pot
+Dish rack
+Silverware drawer
+Broom
+Dustpan
+Oven
+Food processor
+Spice rack
+Trash bags
+Coat hanger
+Fire extinguisher
+Smoke detector

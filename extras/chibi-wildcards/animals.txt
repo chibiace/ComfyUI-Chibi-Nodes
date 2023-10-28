@@ -1,0 +1,398 @@
+Lion
+Elephant
+Tiger
+Giraffe
+Cheetah
+Zebra
+Gorilla
+Penguin
+Dolphin
+Kangaroo
+Polar bear
+Koala
+Orangutan
+Rhinoceros
+Chimpanzee
+Crocodile
+Hippopotamus
+Lemur
+Hyena
+Bald eagle
+Octopus
+Panda
+Red fox
+Snow leopard
+Ostrich
+Black bear
+Meerkat
+Komodo dragon
+Wolf
+Blue whale
+Great white shark
+Platypus
+Red panda
+Peacock
+Armadillo
+Boa constrictor
+Raccoon
+Cheetah
+Ocelot
+Swordfish
+Koala
+Manatee
+Puma
+Snow leopard
+Porcupine
+Platypus
+Gazelle
+Tasmanian devil
+Flamingo
+Chameleon
+Red squirrel
+Hammerhead shark
+Bald eagle
+Tarantula
+Kangaroo
+Sloth
+Hyena
+Wallaby
+Gila monster
+Alligator
+Iguana
+Puffin
+Sea otter
+Tapir
+Pika
+Jerboa
+Salamander
+Pigeon
+Gannet
+Rattlesnake
+Vulture
+Harpy eagle
+Aye-aye
+Fennec fox
+Mandrill
+Yak
+Bison
+Lemming
+Wombat
+Tasmanian tiger
+Narwhal
+Wolverine
+Caracal
+Walrus
+Fossa
+Axolotl
+Lemur
+Tapir
+Warthog
+Okapi
+Quokka
+Capybara
+Snowshoe hare
+Flying squirrel
+Cuttlefish
+Blobfish
+Kakapo
+Proboscis monkey
+Gibbon
+Aardvark
+Bald eagle
+Sloth
+Raccoon
+Armadillo
+Rhinoceros
+Platypus
+Lemur
+Cheetah
+Puma
+Wallaby
+Ocelot
+Octopus
+Chimpanzee
+Puffin
+Tapir
+Gannet
+Wolverine
+Meerkat
+Hyena
+Panda
+Blue whale
+Red panda
+Snow leopard
+Vulture
+Rattlesnake
+Gorilla
+Platypus
+Gazelle
+Flamingo
+Cheetah
+Orangutan
+Bald eagle
+Dolphin
+Koala
+Zebra
+Elephant
+Lion
+Tiger
+Giraffe
+Komodo dragon
+Koala
+Harpy eagle
+Tasmanian devil
+Manatee
+Pigeon
+Red squirrel
+Polar bear
+Tapir
+Iguana
+Ostrich
+Chameleon
+Aye-aye
+Lemming
+Bison
+Hammerhead shark
+Snowshoe hare
+Fossa
+Tasmanian tiger
+Boa constrictor
+Salamander
+Gila monster
+Kakapo
+Pika
+Bald eagle
+Lemur
+Sloth
+Axolotl
+Quokka
+Wallaby
+Caracal
+Sea otter
+Manatee
+Gannet
+Platypus
+Porcupine
+Raccoon
+Wolf
+Hyena
+Polar bear
+Cheetah
+Chimpanzee
+Elephant
+Kangaroo
+Zebra
+Ostrich
+Dolphin
+Cheetah
+Snow leopard
+Penguin
+Tiger
+Red panda
+Platypus
+Gorilla
+Boa constrictor
+Lemur
+Meerkat
+Chimpanzee
+Octopus
+Komodo dragon
+Raccoon
+Koala
+Snowshoe hare
+Ocelot
+Bald eagle
+Manatee
+Blue whale
+Red fox
+Snow leopard
+Panda
+Axolotl
+Blobfish
+Kakapo
+Proboscis monkey
+Gibbon
+Aardvark
+Rhinoceros
+Platypus
+Lemur
+Cheetah
+Puma
+Wallaby
+Ocelot
+Octopus
+Chimpanzee
+Puffin
+Tapir
+Gannet
+Wolverine
+Meerkat
+Hyena
+Panda
+Blue whale
+Red panda
+Snow leopard
+Vulture
+Rattlesnake
+Gorilla
+Platypus
+Gazelle
+Flamingo
+Cheetah
+Orangutan
+Bald eagle
+Dolphin
+Koala
+Zebra
+Elephant
+Lion
+Tiger
+Giraffe
+Komodo dragon
+Koala
+Harpy eagle
+Tasmanian devil
+Manatee
+Pigeon
+Red squirrel
+Polar bear
+Tapir
+Iguana
+Ostrich
+Chameleon
+Aye-aye
+Lemming
+Bison
+Hammerhead shark
+Snowshoe hare
+Fossa
+Tasmanian tiger
+Boa constrictor
+Salamander
+Gila monster
+Kakapo
+Pika
+Bald eagle
+Lemur
+Sloth
+Axolotl
+Quokka
+Wallaby
+Caracal
+Sea otter
+Manatee
+Gannet
+Platypus
+Porcupine
+Raccoon
+Wolf
+Hyena
+Polar bear
+Cheetah
+Chimpanzee
+Elephant
+Kangaroo
+Zebra
+Ostrich
+Dolphin
+Cheetah
+Snow leopard
+Penguin
+Tiger
+Red panda
+Platypus
+Gorilla
+Boa constrictor
+Lemur
+Meerkat
+Chimpanzee
+Octopus
+Komodo dragon
+Raccoon
+Koala
+Snowshoe hare
+Ocelot
+Bald eagle
+Manatee
+Blue whale
+Red fox
+Snow leopard
+Panda
+Axolotl
+Blobfish
+Kakapo
+Proboscis monkey
+Gibbon
+Aardvark
+Rhinoceros
+Platypus
+Lemur
+Cheetah
+Puma
+Wallaby
+Ocelot
+Octopus
+Chimpanzee
+Puffin
+Tapir
+Gannet
+Wolverine
+Meerkat
+Hyena
+Panda
+Blue whale
+Red panda
+Snow leopard
+Vulture
+Rattlesnake
+Gorilla
+Platypus
+Gazelle
+Flamingo
+Cheetah
+Orangutan
+Bald eagle
+Dolphin
+Koala
+Zebra
+Elephant
+Lion
+Tiger
+Giraffe
+Komodo dragon
+Koala
+Harpy eagle
+Tasmanian devil
+Manatee
+Pigeon
+Red squirrel
+Polar bear
+Tapir
+Iguana
+Ostrich
+Chameleon
+Aye-aye
+Lemming
+Bison
+Hammerhead shark
+Snowshoe hare
+Fossa
+Tasmanian tiger
+Boa constrictor
+Salamander
+Gila monster
+Kakapo
+Pika
+Bald eagle
+Lemur
+Sloth
+Axolotl
+Quokka
+Wallaby
+Caracal
+Sea otter
+Manatee
+Gannet
+Platypus
+Porcupine
+Raccoon
