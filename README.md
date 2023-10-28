@@ -20,9 +20,31 @@ A more comprehensive Checkpoint, Vae loader with afew other features such as cli
 Combined Positive and Negative Prompts, Just to save some room.
 
 
-### ImageTool
+### ImageTool (wip)
 
-Uses PIL for some simple image manipulation. 
+Uses PIL for some simple image manipulation. Won't do batch images yet, work in progress.
+
+
+### Wildcards
+
+replaces a keyword from input text if given with a random line from a text file, if no input is given it will output just the random line
+
+wildcards files (some of which i've included which also need some more work) are stored under the extras/chibi-wildcards directory.
+
+
+### LoadEmbedding
+
+Appends the embedding text to the end of the input text ", (embedding:filename.pt:weight) "
+
+
+### ConditionText
+
+4 in 4 out, text to conditioning.
+
+
+### SaveImages (wip)
+
+VaeDecode and SaveImage mixed together. saves to the normal output directory but uses a unix time stamp as the filename eg. 1698462650_001_.png
 
 
 ## Installation
