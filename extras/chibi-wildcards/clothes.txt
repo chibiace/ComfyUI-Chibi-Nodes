@@ -1,0 +1,52 @@
+T-shirt
+Jeans
+Sweater
+Dress
+Shorts
+Jacket
+Blouse
+Skirt
+Pants
+Coat
+Hoodie
+Shirt
+Tank top
+Suit
+Cardigan
+Leggings
+Tunic
+Blazer
+Swimsuit
+Tie
+Scarf
+Vest
+Cap
+Gloves
+Socks
+Hat
+Boots
+Sneakers
+Sandals
+Bikini
+Pajamas
+Slippers
+Sweatshirt
+Raincoat
+Polo shirt
+Trench coat
+Parka
+Turtleneck
+Trousers
+Shawl
+Bolero
+Mittens
+Overalls
+Windbreaker
+Poncho
+Crop top
+Kimono
+Jumpsuit
+Joggers
+Peacoat
+Culottes
+Puffer jacket
