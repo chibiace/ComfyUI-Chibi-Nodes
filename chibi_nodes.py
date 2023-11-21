@@ -3,13 +3,15 @@ import folder_paths
 import comfy.sd
 import comfy.utils
 from comfy.cli_args import args
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFont, ImageDraw
 from PIL.PngImagePlugin import PngInfo
 import numpy as np
 import random
 import os
 import time
 import json 
+
+import hashlib
 
 ### GLOBALS ###
 MAX_RESOLUTION=32768
@@ -79,8 +81,8 @@ class Prompts:
                },
         }
 
-    RETURN_TYPES = ("CONDITIONING","CONDITIONING","CLIP","TEXT","TEXT")
-    RETURN_NAMES = ("Positive Conditioning", "Negative Conditioning", "CLIP", "Positive Text", "Negative Text")
+    RETURN_TYPES = ("CONDITIONING","CONDITIONING","CLIP","STRING","STRING")
+    RETURN_NAMES = ("Positive CONDITIONING", "Negative CONDITIONING", "CLIP", "Positive text", "Negative text")
     FUNCTION = "prompts"
     CATEGORY = "Chibi-Nodes"
 
@@ -155,22 +157,26 @@ class Wildcards:
                 "keyword":("STRING", {"default": "__wildcard__","multiline": False}),
             },
             "optional":{
-                "text" : ("TEXT",),
+                "text" : ("STRING",{"default": '', "multiline": True, "forceInput": True}),
             },
         }
-    RETURN_TYPES = ("CONDITIONING","TEXT",)
+    RETURN_TYPES = ("CONDITIONING","STRING",)
+    RETURN_NAMES = ("CONDITIONING","text",)
     FUNCTION = "wildcards"
     CATEGORY = "Chibi-Nodes"
+
     seed = random.seed()
+    
+
     def IS_CHANGED(s,seed):
         seed = random.seed()
 
-    def wildcards(self, textfile,keyword,clip,text=None,):
+    def wildcards(self, textfile,keyword,clip,text='',):
         with open(folder_paths.get_full_path("chibi-wildcards", textfile)) as f:
             lines = f.readlines()
             aline = random.choice(lines)
 
-        if text != None:
+        if text != '':
             raw = text.replace(keyword,aline)
             cond_raw = clip.tokenize(raw)
             cond, pooled = clip.encode_from_tokens(cond_raw, return_pooled=True)
@@ -190,20 +196,77 @@ class LoadEmbedding:
     @classmethod
     def INPUT_TYPES(s):
         return{"required":{
-            "text" : ("TEXT",),
-            "embedding":[sorted(folder_paths.get_filename_list("embeddings"))],
+            "text" : ("STRING",{"default": '', "multiline": True, "forceInput": True}),
+            "embedding":[sorted(folder_paths.get_filename_list("embeddings"),)],
                         "weight": ("FLOAT", {"default": 1.0, "min": -2, "max": 2, "step": 0.1, "round": 0.01}),
+                        
+                         },
+                         "hidden":{
+                             "preview_image": ("IMAGE",)
                          }}
     
-    RETURN_TYPES = ("TEXT",)
+    RETURN_TYPES = ("STRING","IMAGE",)
+    RETURN_NAMES = ("text","Preview Image")
     FUNCTION = "loadembedding"
     CATEGORY = "Chibi-Nodes"
 
-    def loadembedding(self, text, embedding,weight):
+    # @classmethod
+    # def IS_CHANGED(self,s,embedding):
+    #     print(f'em: {embedding}')
+    #     print(f'path: {folder_paths.get_full_path("embeddings", embedding)}')
+    #     if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
+    #         return  }
+        
+
+    def loadembedding(self, text, embedding,weight, preview_image=None):
 
         output = text + ", (embedding:" + embedding + ":" + str(weight) + ")"
+        # return(output,)
         # embedding.rsplit('.', maxsplit=1)[0]
-        return(output,)
+        if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
+            img_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png") 
+            image = Image.open(img_path)
+            image = ImageOps.exif_transpose(image)
+            image = image.convert("RGB")
+            image = np.array(image).astype(np.float32) / 255.0
+            preview_image = torch.from_numpy(image)[None,]
+        
+            return (output,preview_image)
+        
+            # print(f'yes path: {folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")}')
+            # # return { "ui": { "images": [folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")] } }
+            # image_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")
+            # i = Image.open(image_path)
+            # i = ImageOps.exif_transpose(i)
+            # image = i.convert("RGB")
+            # image = np.array(image).astype(np.float32) / 255.0
+            # image = torch.from_numpy(image)[None,]
+        else:
+            W, H = (256,256)
+            image = Image.new('RGB', (W, H), (255, 255, 255))
+            imaget = ImageDraw.Draw(image)
+            msg = "No Preview"
+            imaget.text(((W-60)/2,H/2),msg,(0,0,0))
+        
+
+            image = np.array(image).astype(np.float32) / 255.0
+            preview_image = torch.from_numpy(image)[None,]
+        
+            return (output,preview_image)
+        
+
+
+    
+    # @classmethod
+    # def IS_CHANGED(s, embedding):
+    #     print("hello")
+    #     if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
+    #         image_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")
+    #         m = hashlib.sha256()
+    #         with open(image_path, 'rb') as f:
+    #             m.update(f.read())
+    #         return m.digest().hex()
+
     
 class ConditionText:
     def __init__(self):
@@ -216,10 +279,10 @@ class ConditionText:
                 "clip": ("CLIP",),
                },
                "optional":{
-                "first" : ("TEXT",),
-                "second" : ("TEXT",),
-                "third" : ("TEXT",),
-                "fourth" : ("TEXT",),
+                "first" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
+                "second" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
+                "third" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
+                "fourth" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
                }
         }
 
@@ -228,10 +291,10 @@ class ConditionText:
     FUNCTION = "conditiontext"
     CATEGORY = "Chibi-Nodes"
 
-    def conditiontext(self, clip, first=None, second=None, third=None, fourth=None, ):
+    def conditiontext(self, clip, first='', second='', third='', fourth='', ):
         emptystring = ""
         returnedcond = []
-        if first != None:
+        if first != '':
             firstraw = clip.tokenize(first)
             first_cond, first_pooled = clip.encode_from_tokens(firstraw, return_pooled=True)
             returnedcond.append([[first_cond, {"pooled_output": first_pooled}]])
@@ -240,7 +303,7 @@ class ConditionText:
             empty_cond, empty_pooled = clip.encode_from_tokens(emptyraw, return_pooled=True)
             returnedcond.append([[empty_cond, {"pooled_output": empty_pooled}]])
 
-        if second != None:
+        if second != '':
             secondraw = clip.tokenize(second)
             second_cond, second_pooled = clip.encode_from_tokens(secondraw, return_pooled=True) 
             returnedcond.append([[second_cond, {"pooled_output": second_pooled}]])
@@ -249,7 +312,7 @@ class ConditionText:
             empty_cond, empty_pooled = clip.encode_from_tokens(emptyraw, return_pooled=True)
             returnedcond.append([[empty_cond, {"pooled_output": empty_pooled}]])
 
-        if third != None:
+        if third != '':
             thirdraw = clip.tokenize(third)
             third_cond, third_pooled = clip.encode_from_tokens(thirdraw, return_pooled=True)
             returnedcond.append([[third_cond, {"pooled_output": third_pooled}]])
@@ -258,7 +321,7 @@ class ConditionText:
             empty_cond, empty_pooled = clip.encode_from_tokens(emptyraw, return_pooled=True)
             returnedcond.append([[empty_cond, {"pooled_output": empty_pooled}]])
 
-        if fourth != None:
+        if fourth != '':
             fourthraw = clip.tokenize(fourth)
             fourth_cond, fourth_pooled = clip.encode_from_tokens(fourthraw, return_pooled=True)
             returnedcond.append([[fourth_cond, {"pooled_output": fourth_pooled}]])
@@ -350,6 +413,30 @@ class SaveImages:
                     counter += 1
 
         return { "ui": { "images": results } }
+    
+
+
+class Textbox:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+               "textfield":("STRING", {"default": "","multiline": True}),}
+        }
+    
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("text",)
+    FUNCTION = "textbox"
+    OUTPUT_NODE = False
+    CATEGORY = "Chibi-Nodes"
+
+    def textbox(self,textfield):
+        return (textfield,)
+
+
 
 
 NODE_CLASS_MAPPINGS = {
@@ -360,5 +447,6 @@ NODE_CLASS_MAPPINGS = {
     "LoadEmbedding": LoadEmbedding,
     "ConditionText": ConditionText, 
     "SaveImages":SaveImages,
+    "Textbox":Textbox,
 
 }
