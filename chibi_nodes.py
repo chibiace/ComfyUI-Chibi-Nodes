@@ -74,11 +74,15 @@ class Prompts:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "clip": ("CLIP",),
+                
                 "Positive": ("STRING", {"default": "Positive Prompt","multiline": True}),
                 "Negative": ("STRING", {"default": "Negative Prompt","multiline": True}),
 
                },
+               "optional":{
+                   "clip": ("CLIP",),
+               },
+
         }
 
     RETURN_TYPES = ("CONDITIONING","CONDITIONING","CLIP","STRING","STRING")
@@ -86,13 +90,16 @@ class Prompts:
     FUNCTION = "prompts"
     CATEGORY = "Chibi-Nodes"
 
-    def prompts(self, clip, Positive, Negative):
-        pos_cond_raw = clip.tokenize(Positive)
-        neg_cond_raw = clip.tokenize(Negative)
-        pos_cond, pos_pooled = clip.encode_from_tokens(pos_cond_raw, return_pooled=True)
-        neg_cond, neg_pooled = clip.encode_from_tokens(neg_cond_raw, return_pooled=True)
-        
-        return ([[pos_cond, {"pooled_output": pos_pooled}]],[[neg_cond, {"pooled_output": neg_pooled}]],clip,Positive,Negative)
+    def prompts(self,  Positive, Negative, clip=None,):
+        if clip:
+            pos_cond_raw = clip.tokenize(Positive)
+            neg_cond_raw = clip.tokenize(Negative)
+            pos_cond, pos_pooled = clip.encode_from_tokens(pos_cond_raw, return_pooled=True)
+            neg_cond, neg_pooled = clip.encode_from_tokens(neg_cond_raw, return_pooled=True)
+            
+            return ([[pos_cond, {"pooled_output": pos_pooled}]],[[neg_cond, {"pooled_output": neg_pooled}]],clip,Positive,Negative)
+        else:
+            return (None, None, None, Positive,Negative)
 
 class ImageTool:
     def __init__(self):
@@ -152,12 +159,13 @@ class Wildcards:
     def INPUT_TYPES(s):
         return {
             "required":{
-                "clip": ("CLIP",),
                 "textfile" : [sorted(folder_paths.get_filename_list("chibi-wildcards"))],
                 "keyword":("STRING", {"default": "__wildcard__","multiline": False}),
+                "entries_returned":  ("INT", {"default": 1, "min": 1, "max": 10, "step": 1}),
             },
             "optional":{
-                "text" : ("STRING",{"default": '', "multiline": True, "forceInput": True}),
+                "clip": ("CLIP",),
+                "text" : ("STRING",{"default": '', "multiline": False, "forceInput": True}),
             },
         }
     RETURN_TYPES = ("CONDITIONING","STRING",)
@@ -171,22 +179,35 @@ class Wildcards:
     def IS_CHANGED(s,seed):
         seed = random.seed()
 
-    def wildcards(self, textfile,keyword,clip,text='',):
+    def wildcards(self, textfile,keyword,entries_returned,clip=None,text='',):
+        entries = ""
         with open(folder_paths.get_full_path("chibi-wildcards", textfile)) as f:
             lines = f.readlines()
-            aline = random.choice(lines)
-
+            for i in range(0,entries_returned):
+                aline = random.choice(lines).rstrip()
+                if entries == "":
+                    entries = aline
+                else:
+                    entries = entries + " " + aline 
+            
+        aline = entries
         if text != '':
             raw = text.replace(keyword,aline)
-            cond_raw = clip.tokenize(raw)
-            cond, pooled = clip.encode_from_tokens(cond_raw, return_pooled=True)
-            return([[cond, {"pooled_output": pooled}]],raw,)
+
+            if clip:
+                cond_raw = clip.tokenize(raw)
+                cond, pooled = clip.encode_from_tokens(cond_raw, return_pooled=True)
+                return([[cond, {"pooled_output": pooled}]],raw,)
+            else:
+                return(None,raw,)
         
         else:
-            cond_raw = clip.tokenize(aline)
-            cond, pooled = clip.encode_from_tokens(cond_raw, return_pooled=True)
-            return([[cond, {"pooled_output": pooled}]],aline,)
-        
+            if clip:
+                cond_raw = clip.tokenize(aline)
+                cond, pooled = clip.encode_from_tokens(cond_raw, return_pooled=True)
+                return([[cond, {"pooled_output": pooled}]],aline,)
+            else:
+                return(None,aline,)
 
        
 class LoadEmbedding:
@@ -196,7 +217,7 @@ class LoadEmbedding:
     @classmethod
     def INPUT_TYPES(s):
         return{"required":{
-            "text" : ("STRING",{"default": '', "multiline": True, "forceInput": True}),
+            "text" : ("STRING",{"default": '', "multiline": False, "forceInput": True}),
             "embedding":[sorted(folder_paths.get_filename_list("embeddings"),)],
                         "weight": ("FLOAT", {"default": 1.0, "min": -2, "max": 2, "step": 0.1, "round": 0.01}),
                         
@@ -210,19 +231,11 @@ class LoadEmbedding:
     FUNCTION = "loadembedding"
     CATEGORY = "Chibi-Nodes"
 
-    # @classmethod
-    # def IS_CHANGED(self,s,embedding):
-    #     print(f'em: {embedding}')
-    #     print(f'path: {folder_paths.get_full_path("embeddings", embedding)}')
-    #     if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
-    #         return  }
-        
 
     def loadembedding(self, text, embedding,weight, preview_image=None):
 
         output = text + ", (embedding:" + embedding + ":" + str(weight) + ")"
-        # return(output,)
-        # embedding.rsplit('.', maxsplit=1)[0]
+
         if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
             img_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png") 
             image = Image.open(img_path)
@@ -233,14 +246,6 @@ class LoadEmbedding:
         
             return (output,preview_image)
         
-            # print(f'yes path: {folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")}')
-            # # return { "ui": { "images": [folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")] } }
-            # image_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")
-            # i = Image.open(image_path)
-            # i = ImageOps.exif_transpose(i)
-            # image = i.convert("RGB")
-            # image = np.array(image).astype(np.float32) / 255.0
-            # image = torch.from_numpy(image)[None,]
         else:
             W, H = (256,256)
             image = Image.new('RGB', (W, H), (255, 255, 255))
@@ -257,15 +262,7 @@ class LoadEmbedding:
 
 
     
-    # @classmethod
-    # def IS_CHANGED(s, embedding):
-    #     print("hello")
-    #     if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
-    #         image_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")
-    #         m = hashlib.sha256()
-    #         with open(image_path, 'rb') as f:
-    #             m.update(f.read())
-    #         return m.digest().hex()
+
 
     
 class ConditionText:
@@ -279,10 +276,10 @@ class ConditionText:
                 "clip": ("CLIP",),
                },
                "optional":{
-                "first" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
-                "second" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
-                "third" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
-                "fourth" : ("STRING", {"default": '', "multiline": True, "forceInput": True}),
+                "first" : ("STRING", {"default": '', "multiline": False, "forceInput": True}),
+                "second" : ("STRING", {"default": '', "multiline": False, "forceInput": True}),
+                "third" : ("STRING", {"default": '', "multiline": False, "forceInput": True}),
+                "fourth" : ("STRING", {"default": '', "multiline": False, "forceInput": True}),
                }
         }
 
@@ -424,17 +421,26 @@ class Textbox:
     def INPUT_TYPES(s):
         return {
             "required": {
-               "textfield":("STRING", {"default": "","multiline": True}),}
+               "text":("STRING", {"default": '',"multiline": True,"forceInput": False,"print_to_screen": True}),
+
+            },
+               "optional": {
+                   "passthrough":("STRING", {"default": "","multiline": True,"forceInput": True})
+               },
         }
     
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("text",)
+    OUTPUT_NODE = True
     FUNCTION = "textbox"
-    OUTPUT_NODE = False
     CATEGORY = "Chibi-Nodes"
 
-    def textbox(self,textfield):
-        return (textfield,)
+    def textbox(self,text="",passthrough=""):
+        if passthrough != "":
+            text = passthrough
+            return {"ui": {"text": text},"result": (text,)}
+        else:
+            return {"ui": {"text": text},"result": (text,)}
 
 
 
