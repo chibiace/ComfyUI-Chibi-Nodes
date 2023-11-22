@@ -29,6 +29,8 @@ Uses PIL for some simple image manipulation. Won't do batch images yet, work in 
 
 replaces a keyword from input text if given with a random line from a text file, if no input is given it will output just the random line
 
+can now return multiple random lines from the same file if desired, but be aware you can get doubles
+
 wildcards files (some of which i've included which also need some more work) are stored under the extras/chibi-wildcards directory.
 
 
@@ -45,6 +47,11 @@ Appends the embedding text to the end of the input text ", (embedding:filename.p
 ### SaveImages (wip)
 
 VaeDecode and SaveImage mixed together. saves to the normal output directory but uses a unix time stamp as the filename eg. 1698462650_001_.png
+
+
+### Textbox
+
+A simple text box, if passthrough text is supplied it will update the textbox contents and also send it forward. 
 
 
 ## Installation
