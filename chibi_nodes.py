@@ -440,7 +440,7 @@ class Textbox:
             text = passthrough
             return {"ui": {"text": text},"result": (text,)}
         else:
-            return {"ui": {"text": text},"result": (text,)}
+            return (text,)
 
 
 
