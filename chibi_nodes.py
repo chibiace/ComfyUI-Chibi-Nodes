@@ -122,11 +122,16 @@ class ImageTool:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "imagetools"
-    CATEGORY = "Chibi-Nodes"
+    CATEGORY = "Chibi-Nodes/Image"
 
     def imagetools(self, image, height, width, crop, rotate, mirror, flip, bgcolor):
         image = Image.fromarray(np.clip(255. * image[0].cpu().numpy(),0,255).astype(np.uint8))
         image = image.rotate(rotate,fillcolor=bgcolor)
+
+        #black and white
+        #corrections?
+        #generate mask from background color (crop, rotate)
+
         if mirror:
             image = ImageOps.mirror(image)
         
@@ -142,7 +147,7 @@ class ImageTool:
             image = image.crop((left, top, right, bottom))            
             
         else:
-            image = image.resize((width,height), Image.Resampling.LANCZOS)
+            image = image.resize((width,height), Image.LANCZOS)
 
         image = ImageOps.exif_transpose(image)
         image = image.convert("RGB")
@@ -286,7 +291,7 @@ class ConditionText:
     RETURN_TYPES = ("CLIP","CONDITIONING","CONDITIONING","CONDITIONING","CONDITIONING",)
     RETURN_NAMES = ("CLIP","first","second","third","fourth",)
     FUNCTION = "conditiontext"
-    CATEGORY = "Chibi-Nodes"
+    CATEGORY = "Chibi-Nodes/Text"
 
     def conditiontext(self, clip, first='', second='', third='', fourth='', ):
         emptystring = ""
@@ -433,7 +438,7 @@ class Textbox:
     RETURN_NAMES = ("text",)
     OUTPUT_NODE = True
     FUNCTION = "textbox"
-    CATEGORY = "Chibi-Nodes"
+    CATEGORY = "Chibi-Nodes/Text"
 
     def textbox(self,text="",passthrough=""):
         if passthrough != "":
@@ -442,7 +447,132 @@ class Textbox:
         else:
             return (text,)
 
+class ImageSizeInfo:
+    def __init__(self):
+        pass
 
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required":{
+                "image": ("IMAGE",)
+            },
+            "hidden":{
+                "width": ("INT",),
+                "height": ("INT",),
+            }}
+    RETURN_TYPES = ("IMAGE","INT","INT",)
+    RETURN_NAMES = ("IMAGE","width","height",)
+    OUTPUT_NODE = True
+    FUNCTION = "imagesizeinfo"
+    CATEGORY = "Chibi-Nodes/Image"
+
+    def imagesizeinfo(self, image, width=0, height=0):
+        shape = image.shape
+        width = shape[2]
+        height = shape[1]
+        return {"ui": {"width": [width], "height": [height]},"result": (image,width,height,)}
+
+
+class ImageSimpleResize:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required":{
+                "image": ("IMAGE",),
+                "size": ("INT", {"default": 512, "min": 16, "max": MAX_RESOLUTION, "step": 1}),
+                "edge":(["largest","smallest","all","width","height"],),
+            },
+            "optional":{
+                "size_override":("INT",{"forceInput": True})
+            }}
+    RETURN_TYPES = ("IMAGE",)
+    OUTPUT_NODE = False
+    FUNCTION = "imagesimpleresize"
+    CATEGORY = "Chibi-Nodes/Image"
+
+    def imagesimpleresize(self, image, size, edge, size_override=None):
+        if size_override:
+            size = size_override
+
+        width = image.shape[2]
+        height = image.shape[1]
+        ratio = height / width
+        image = Image.fromarray(np.clip(255. * image[0].cpu().numpy(),0,255).astype(np.uint8))
+
+        if edge == "largest":
+            if width > height:
+                if size < width:
+                    image = ImageOps.contain(image, (size,MAX_RESOLUTION), Image.LANCZOS)
+                else:
+                    image = image.resize((round(size),round(size*ratio)), Image.LANCZOS)
+            if width < height:
+                if size < height:
+                    image = ImageOps.contain(image, (MAX_RESOLUTION,size), Image.LANCZOS)
+                else:
+                    image = image.resize((round(size/ratio),round(size)), Image.LANCZOS)
+            if width == height:
+                if size < width:
+                    image = ImageOps.contain(image, (size,size), Image.LANCZOS)
+                else:
+                    image = image.resize((round(size),round(size)), Image.LANCZOS)
+
+
+        if edge == "smallest":
+            if width > height:
+                if size < height:
+                    image = ImageOps.contain(image, (MAX_RESOLUTION,size), Image.LANCZOS)
+                else:
+                    image = image.resize((round(size/ratio),round(size)), Image.LANCZOS)
+            if width < height:
+                if size < width:
+                    image = ImageOps.contain(image, (MAX_RESOLUTION,size), Image.LANCZOS)
+                else:
+                    image = image.resize((round(size),round(size*ratio)), Image.LANCZOS)
+            if width == height:
+                if size < width:
+                    image = ImageOps.contain(image, (size,size), Image.LANCZOS)
+                else:
+                    image = image.resize((round(size),round(size)), Image.LANCZOS)
+
+        if edge == "all":
+            image = image.resize((round(size),round(size)), Image.LANCZOS)
+
+        if edge == "width":
+            image = image.resize((round(size),round(height)), Image.LANCZOS)
+
+        if edge == "height":
+            image = image.resize((round(width),round(size)), Image.LANCZOS)
+
+
+        image = ImageOps.exif_transpose(image)
+        image = image.convert("RGB")
+        image = np.array(image).astype(np.float32) / 255.0
+        image = torch.from_numpy(image)[None,]
+        
+        return(image,)
+    
+class Int2String:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required":{
+                "Int":("INT",{"forceInput": True})
+            },}
+    RETURN_TYPES = ("STRING",)
+    OUTPUT_NODE = False
+    FUNCTION = "int2string"
+    CATEGORY = "Chibi-Nodes/Text"
+
+    def int2string(self, Int):
+        print(Int)
+        return(str(Int),)
 
 
 NODE_CLASS_MAPPINGS = {
@@ -454,5 +584,8 @@ NODE_CLASS_MAPPINGS = {
     "ConditionText": ConditionText, 
     "SaveImages":SaveImages,
     "Textbox":Textbox,
+    "ImageSizeInfo" : ImageSizeInfo,
+    "ImageSimpleResize" : ImageSimpleResize,
+    "Int2String": Int2String,
 
 }
