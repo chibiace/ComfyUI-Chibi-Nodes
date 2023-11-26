@@ -46,10 +46,6 @@ VaeDecode and SaveImage mixed together. saves to the normal output directory but
 
 A simple text box, if passthrough text is supplied it will update the textbox contents and also send it forward.
 
-    "ImageSizeInfo" : ImageSizeInfo,
-    "ImageSimpleResize" : ImageSimpleResize,
-    "Int2String": Int2String,
-
 ### ImageSizeInfo
 
 Displays the resolution of the input image, and sends it along as well as two int values for the dimensions.
