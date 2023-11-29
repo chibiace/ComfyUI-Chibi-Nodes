@@ -343,6 +343,9 @@ class SaveImages:
     def INPUT_TYPES(s):
         return {
             "required": {
+                "filename_type":(["Timestamp","Fixed","Fixed Single"],),
+                "fixed_filename":("STRING",{"default":"output"})
+            
                },
                "optional":{
                 "images" : ("IMAGE",),
@@ -352,13 +355,19 @@ class SaveImages:
                "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"},
         }
     
-    RETURN_TYPES = ()
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
     FUNCTION = "saveimage"
     OUTPUT_NODE = True
     CATEGORY = "Chibi-Nodes"
     
+    seed = random.seed()
+    
 
-    def saveimage(self,vae=None, latents=None, images=None, prompt=None, extra_pnginfo=None):
+    def IS_CHANGED(s,seed):
+        seed = random.seed()
+
+    def saveimage(self,filename_type,fixed_filename,vae=None, latents=None, images=None, prompt=None, extra_pnginfo=None):
 
         now = str(round(time.time()))
         
@@ -379,8 +388,14 @@ class SaveImages:
                     if extra_pnginfo is not None:
                         for x in extra_pnginfo:
                             metadata.add_text(x, json.dumps(extra_pnginfo[x]))
+                
+                if filename_type == "Timestamp":
+                    file = f"{now}_{counter:03}.png"
+                if filename_type == "Fixed":
+                    file = f"{fixed_filename}_{counter:03}.png"
+                if filename_type == "Fixed Single":
+                    file = f"{fixed_filename}.png"
 
-                file = f"{now}_{counter:03}_.png"
                 img.save(os.path.join(full_output_folder, file), pnginfo=metadata, compress_level=4)
                 results.append({
                     "filename": file,
@@ -388,6 +403,7 @@ class SaveImages:
                     "type": "output"
                 })
                 counter += 1
+                return_results = images
         if vae != None:
             if latents != None:
                 
@@ -405,7 +421,12 @@ class SaveImages:
                             for x in extra_pnginfo:
                                 metadata.add_text(x, json.dumps(extra_pnginfo[x]))
 
-                    file = f"{now}_{counter:03}_.png"
+                    if filename_type == "Timestamp":
+                        file = f"{now}_{counter:03}.png"
+                    if filename_type == "Fixed":
+                        file = f"{fixed_filename}_{counter:03}.png"
+                    if filename_type == "Fixed Single":
+                        file = f"{fixed_filename}.png"
                     img.save(os.path.join(full_output_folder, file), pnginfo=metadata, compress_level=4)
                     results.append({
                         "filename": file,
@@ -413,8 +434,10 @@ class SaveImages:
                         "type": "output"
                     })
                     counter += 1
+                return_results = decoded_latents
 
-        return { "ui": { "images": results } }
+        # return { "ui":  { "images": results }}
+        return {"ui": { "images": results },"result": (return_results,)}
     
 
 
