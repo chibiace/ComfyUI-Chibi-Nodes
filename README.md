@@ -84,6 +84,10 @@ Also can make latents if supplied with a VAE, and the filename,width,height can 
 
 Basic random or fixed number generator
 
+### TextSplit
+
+Splits text at the first separator found from the front or back (reverse) of the text, you can choose which half you want output.  
+
 ## Installation
 
 To install, download the repository to the custom_nodes directory:
