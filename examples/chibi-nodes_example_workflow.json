@@ -1,0 +1,967 @@
+{
+  "last_node_id": 17,
+  "last_link_id": 31,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "SimpleSampler",
+      "pos": [
+        1242,
+        42
+      ],
+      "size": [
+        315,
+        374.00000762939453
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 29
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 30
+        },
+        {
+          "name": "latents",
+          "type": "LATENT",
+          "link": 19
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "link": 31,
+          "widget": {
+            "name": "seed"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            6
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SimpleSampler"
+      },
+      "widgets_values": [
+        "LCM Lora - lcm",
+        "txt2img",
+        52035115894296,
+        "randomize"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "SaveImages",
+      "pos": [
+        1659,
+        51
+      ],
+      "size": [
+        478.60660644531254,
+        623.8273217773437
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "latents",
+          "type": "LATENT",
+          "link": 6
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        },
+        {
+          "name": "fixed_filename_override",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "fixed_filename_override"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "filename_list",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImages"
+      },
+      "widgets_values": [
+        "Timestamp",
+        "output",
+        ""
+      ]
+    },
+    {
+      "id": 6,
+      "type": "SaveImages",
+      "pos": [
+        1654,
+        758
+      ],
+      "size": [
+        486.1166064453123,
+        508.0973217773437
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "latents",
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "fixed_filename_override",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "fixed_filename_override"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "filename_list",
+          "type": "STRING",
+          "links": null,
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImages"
+      },
+      "widgets_values": [
+        "Timestamp",
+        "output",
+        ""
+      ]
+    },
+    {
+      "id": 5,
+      "type": "ImageAddText",
+      "pos": [
+        1202,
+        760
+      ],
+      "size": {
+        "0": 400,
+        "1": 308
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageAddText"
+      },
+      "widgets_values": [
+        "Chibi-Nodes",
+        "Ubuntu-Bold.ttf",
+        200,
+        "black",
+        true,
+        10,
+        259,
+        512,
+        512
+      ]
+    },
+    {
+      "id": 10,
+      "type": "Textbox",
+      "pos": [
+        1220,
+        491
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "passthrough",
+          "type": "STRING",
+          "link": 13,
+          "widget": {
+            "name": "passthrough"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Textbox"
+      },
+      "widgets_values": [
+        "photo of a Cheetah",
+        ""
+      ]
+    },
+    {
+      "id": 3,
+      "type": "Prompts",
+      "pos": [
+        36,
+        468
+      ],
+      "size": {
+        "0": 400,
+        "1": 206
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Positive CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "Negative CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            10,
+            27
+          ],
+          "shape": 3,
+          "slot_index": 2
+        },
+        {
+          "name": "Positive text",
+          "type": "STRING",
+          "links": [
+            12
+          ],
+          "shape": 3,
+          "slot_index": 3
+        },
+        {
+          "name": "Negative text",
+          "type": "STRING",
+          "links": [
+            25
+          ],
+          "shape": 3,
+          "slot_index": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompts"
+      },
+      "widgets_values": [
+        "photo of a __wildcard__",
+        "Negative Prompt"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "LoadImageExtended",
+      "pos": [
+        44,
+        739
+      ],
+      "size": [
+        315,
+        414.0000305175781
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            17
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "filename",
+          "type": "STRING",
+          "links": [],
+          "shape": 3,
+          "slot_index": 3
+        },
+        {
+          "name": "image Info",
+          "type": "STRING",
+          "links": [
+            22
+          ],
+          "shape": 3,
+          "slot_index": 4
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageExtended"
+      },
+      "widgets_values": [
+        "1701907829_001.png",
+        "image"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "ImageSimpleResize",
+      "pos": [
+        631,
+        753
+      ],
+      "size": [
+        315,
+        126
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 17
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "size_override",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "size_override"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageSimpleResize"
+      },
+      "widgets_values": [
+        1200,
+        "width",
+        0
+      ]
+    },
+    {
+      "id": 13,
+      "type": "Textbox",
+      "pos": [
+        424,
+        931
+      ],
+      "size": [
+        750.536597290039,
+        360.5073205566405
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "passthrough",
+          "type": "STRING",
+          "link": 22,
+          "widget": {
+            "name": "passthrough"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Textbox"
+      },
+      "widgets_values": [
+        "{\n  \"prompt\": {\n    \"1\": {\n      \"inputs\": {\n        \"Checkpoint\": \"revCounter_lcm.safetensors\",\n        \"Vae\": \"Included\",\n        \"stop_at_clip_layer\": -1,\n        \"width\": 512,\n        \"height\": 512,\n        \"batch_size\": 1\n      },\n      \"class_type\": \"Loader\"\n    },\n    \"2\": {\n      \"inputs\": {\n        \"sampler\": \"LCM Lora - lcm\",\n        \"mode\": \"txt2img\",\n        \"model\": [\n          \"1\",\n          0\n        ],\n        \"positive\": [\n          \"8\",\n          0\n        ],\n        \"negative\": [\n          \"3\",\n          1\n        ],\n        \"latents\": [\n          \"1\",\n          3\n        ]\n      },\n      \"class_type\": \"SimpleSampler\"\n    },\n    \"3\": {\n      \"inputs\": {\n        \"Positive\": \"photo of a __wildcard__\",\n        \"Negative\": \"Negative Prompt\",\n        \"clip\": [\n          \"1\",\n          2\n        ]\n      },\n      \"class_type\": \"Prompts\"\n    },\n    \"4\": {\n      \"inputs\": {\n        \"filename_type\": \"Timestamp\",\n        \"fixed_filename\": \"output\",\n        \"latents\": [\n          \"2\",\n          0\n        ],\n        \"vae\": [\n          \"1\",\n          1\n        ]\n      },\n      \"class_type\": \"SaveImages\"\n    },\n    \"5\": {\n      \"inputs\": {\n        \"text\": \"Chibi-Nodes\",\n        \"font\": \"Ubuntu-Bold.ttf\",\n        \"font_size\": 200,\n        \"font_colour\": \"white (mask)\",\n        \"invert_mask\": true,\n        \"position_x\": 10,\n        \"position_y\": 259,\n        \"width\": 512,\n        \"height\": 512,\n        \"image\": [\n          \"14\",\n          0\n        ]\n      },\n      \"class_type\": \"ImageAddText\"\n    },\n    \"6\": {\n      \"inputs\": {\n        \"filename_type\": \"Timestamp\",\n        \"fixed_filename\": \"output\",\n        \"images\": [\n          \"5\",\n          0\n        ]\n      },\n      \"class_type\": \"SaveImages\"\n    },\n    \"7\": {\n      \"inputs\": {\n        \"text\": [\n          \"3\",\n          4\n        ],\n        \"embedding\": \"EasyNegative.pt\",\n        \"weight\": 1\n      },\n      \"class_type\": \"LoadEmbedding\"\n    },\n    \"8\": {\n      \"inputs\": {\n        \"textfile\": \"animals.txt\",\n        \"keyword\": \"__wildcard__\",\n        \"entries_returned\": 1,\n        \"text\": [\n          \"3\",\n          3\n        ],\n        \"clip\": [\n          \"3\",\n          2\n        ]\n      },\n      \"class_type\": \"Wildcards\"\n    },\n    \"9\": {\n      \"inputs\": {\n        \"text\": [\n          \"7\",\n          0\n        ],\n        \"clip\": [\n          \"3\",\n          2\n        ]\n      },\n      \"class_type\": \"ConditionText\"\n    },\n    \"10\": {\n      \"inputs\": {\n        \"text\": \"photo of a Octopus\",\n        \"passthrough\": [\n          \"8\",\n          1\n        ]\n      },\n      \"class_type\": \"Textbox\"\n    },\n    \"12\": {\n      \"inputs\": {\n        \"image\": \"1701858475_001.png\",\n        \"upload\": \"image\"\n      },\n      \"class_type\": \"LoadImageExtended\",\n      \"is_changed\": [\n        \"73542fc8113da6a57e0cf2457d2a6fff3d5d740db5a811a795af85450346a0d9\"\n      ]\n    },\n    \"13\": {\n      \"inputs\": {\n        \"text\": \"\\n  \\\"prompt\\\": \\n    \\\"2\\\": \\n      \\\"inputs\\\": \\n        \\\"text\\\": \\\"['EasyNegative, (simple background), 2d']\\\"\\n      ,\\n      \\\"class_type\\\": \\\"Textbox\\\"\\n    ,\\n    \\\"3\\\": \\n      \\\"inputs\\\": \\n        \\\"text\\\": \\\"['1girl, (rainbow  multicolored diamond hair), intricate black red rose gown with patterns, chubby, muscles, 3d realistic 4k ultra detailed, happy,smiling, victorian']\\\"\\n      ,\\n      \\\"class_type\\\": \\\"Textbox\\\"\\n    ,\\n    \\\"4\\\": \\n      \\\"inputs\\\": \\n        \\\"text\\\": \\\"png\\\"\\n      ,\\n      \\\"class_type\\\": \\\"Textbox\\\"\\n    ,\\n    \\\"5\\\": \\n      \\\"inputs\\\": \\n        \\\"text\\\": \\\"1701853548_001\\\"\\n      ,\\n      \\\"class_type\\\": \\\"Textbox\\\"\\n    ,\\n    \\\"7\\\": \\n      \\\"inputs\\\": \\n        \\\"sampler\\\": \\\"LCM Lora - lcm\\\",\\n        \\\"mode\\\": \\\"txt2img\\\",\\n        \\\"model\\\": [\\n          \\\"9\\\",\\n          0\\n        ],\\n        \\\"positive\\\": [\\n          \\\"10\\\",\\n          0\\n        ],\\n        \\\"negative\\\": [\\n          \\\"10\\\",\\n          1\\n        ],\\n        \\\"latents\\\": [\\n          \\\"9\\\",\\n          3\\n        ]\\n      ,\\n      \\\"class_type\\\": \\\"SimpleSampler\\\"\\n    ,\\n    \\\"8\\\": \\n      \\\"inputs\\\": \\n        \\\"image\\\": \\\"00005-2786280302.0.png\\\",\\n        \\\"upload\\\": \\\"image\\\"\\n      ,\\n      \\\"class_type\\\": \\\"LoadImageExtended\\\",\\n      \\\"is_changed\\\": [\\n        \\\"9140d5405c3621b88ad63bb21d4d52449b4654cd6a366d88e9657917938947b5\\\"\\n      ]\\n    ,\\n    \\\"9\\\": \\n      \\\"inputs\\\": \\n        \\\"Checkpoint\\\": \\\"revCounter_lcm.safetensors\\\",\\n        \\\"Vae\\\": \\\"blessed2.vae.pt\\\",\\n        \\\"stop_at_clip_layer\\\": -1,\\n        \\\"width\\\": 512,\\n        \\\"height\\\": 512,\\n        \\\"batch_size\\\": 1\\n      ,\\n      \\\"class_type\\\": \\\"Loader\\\"\\n    ,\\n    \\\"10\\\": \\n      \\\"inputs\\\": \\n        \\\"Positive\\\": \\\"Positive Prompt Positive1\\\",\\n        \\\"Negative\\\": \\\"Negative Prompt Negative1\\\",\\n        \\\"clip\\\": [\\n          \\\"9\\\",\\n          2\\n        ]\\n      ,\\n      \\\"class_type\\\": \\\"Prompts\\\"\\n    ,\\n    \\\"11\\\": \\n      \\\"inputs\\\": \\n        \\\"sampler\\\": \\\"LCM Lora - lcm\\\",\\n        \\\"mode\\\": \\\"img2img\\\",\\n        \\\"model\\\": [\\n          \\\"9\\\",\\n          0\\n        ],\\n        \\\"positive\\\": [\\n          \\\"12\\\",\\n          0\\n        ],\\n        \\\"negative\\\": [\\n          \\\"13\\\",\\n          0\\n        ],\\n        \\\"latents\\\": [\\n          \\\"7\\\",\\n          0\\n        ]\\n      ,\\n      \\\"class_type\\\": \\\"SimpleSampler\\\"\\n    ,\\n    \\\"12\\\": \\n      \\\"inputs\\\": \\n        \\\"text\\\": \\\"pos2 and stuff goes pos2\\\",\\n        \\\"clip\\\": [\\n          \\\"9\\\",\\n          2\\n        ]\\n      ,\\n      \\\"class_type\\\": \\\"CLIPTextEncode\\\"\\n    ,\\n    \\\"13\\\": \\n      \\\"inputs\\\": \\n        \\\"text\\\": \\\"neg2 and stuff goes neg2\\\",\\n        \\\"clip\\\": [\\n          \\\"9\\\",\\n          2\\n        ]\\n      ,\\n      \\\"class_type\\\": \\\"CLIPTextEncode\\\"\\n    ,\\n    \\\"14\\\": \\n      \\\"inputs\\\": \\n        \\\"filename_type\\\": \\\"Timestamp\\\",\\n        \\\"fixed_filename\\\": \\\"output\\\",\\n        \\\"latents\\\": [\\n          \\\"11\\\",\\n          0\\n        ],\\n        \\\"vae\\\": [\\n          \\\"9\\\",\\n          1\\n        ]\\n      ,\\n      \\\"class_type\\\": \\\"SaveImages\\\"\\n    \\n  \\n\",\n        \"passthrough\": [\n          \"12\",\n          4\n        ]\n      },\n      \"class_type\": \"Textbox\"\n    },\n    \"14\": {\n      \"inputs\": {\n        \"size\": 1200,\n        \"edge\": \"width\",\n        \"image\": [\n          \"12\",\n          0\n        ]\n      },\n      \"class_type\": \"ImageSimpleResize\"\n    }\n  }\n}",
+        ""
+      ]
+    },
+    {
+      "id": 8,
+      "type": "Wildcards",
+      "pos": [
+        839,
+        546
+      ],
+      "size": [
+        315,
+        150
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 10
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 12,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            29
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            13
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Wildcards"
+      },
+      "widgets_values": [
+        "animals.txt",
+        "__wildcard__",
+        1,
+        ""
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ConditionText",
+      "pos": [
+        867,
+        238
+      ],
+      "size": [
+        315,
+        78
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 27
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 26,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            30
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditionText"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoadEmbedding",
+      "pos": [
+        507,
+        364
+      ],
+      "size": [
+        315,
+        126
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 25,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            26
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "Preview Image",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadEmbedding"
+      },
+      "widgets_values": [
+        "",
+        "EasyNegative.pt",
+        1
+      ]
+    },
+    {
+      "id": 17,
+      "type": "SeedGenerator",
+      "pos": [
+        427,
+        185
+      ],
+      "size": {
+        "0": 315,
+        "1": 102
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            31
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SeedGenerator"
+      },
+      "widgets_values": [
+        "Fixed",
+        8008135
+      ]
+    },
+    {
+      "id": 1,
+      "type": "Loader",
+      "pos": [
+        7,
+        49
+      ],
+      "size": {
+        "0": 315,
+        "1": 238
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            11
+          ],
+          "shape": 3,
+          "slot_index": 2
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            19
+          ],
+          "shape": 3,
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Loader"
+      },
+      "widgets_values": [
+        "revCounter_lcm.safetensors",
+        "blessed2.vae.pt",
+        -1,
+        512,
+        512,
+        1
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "MODEL"
+    ],
+    [
+      6,
+      2,
+      0,
+      4,
+      1,
+      "LATENT"
+    ],
+    [
+      7,
+      1,
+      1,
+      4,
+      2,
+      "VAE"
+    ],
+    [
+      9,
+      5,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      3,
+      2,
+      8,
+      0,
+      "CLIP"
+    ],
+    [
+      11,
+      1,
+      2,
+      3,
+      0,
+      "CLIP"
+    ],
+    [
+      12,
+      3,
+      3,
+      8,
+      1,
+      "STRING"
+    ],
+    [
+      13,
+      8,
+      1,
+      10,
+      0,
+      "STRING"
+    ],
+    [
+      17,
+      12,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      14,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      1,
+      3,
+      2,
+      3,
+      "LATENT"
+    ],
+    [
+      22,
+      12,
+      4,
+      13,
+      0,
+      "STRING"
+    ],
+    [
+      25,
+      3,
+      4,
+      7,
+      0,
+      "STRING"
+    ],
+    [
+      26,
+      7,
+      0,
+      9,
+      1,
+      "STRING"
+    ],
+    [
+      27,
+      3,
+      2,
+      9,
+      0,
+      "CLIP"
+    ],
+    [
+      29,
+      8,
+      0,
+      2,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      30,
+      9,
+      1,
+      2,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      31,
+      17,
+      0,
+      2,
+      4,
+      "INT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
