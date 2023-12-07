@@ -1001,7 +1001,39 @@ class ImageAddText:
             
             
             return (image,mask.unsqueeze(0),text,)
+    
+class TextSplit:
+    def __init__(self):
+        pass
 
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required":{
+                "text":("STRING",{"default":"","forceInput": True},),
+                "separator":("STRING",{"default":"."},),
+                "reverse": ([False,True],),
+                "return_half":(["First Half","Second Half"],),
+            },}
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("text",)
+    OUTPUT_NODE = True
+    FUNCTION = "dosplit"
+    CATEGORY = "Chibi-Nodes/Text"
+
+    def dosplit(self, text,separator,reverse,return_half):
+        if reverse == True:
+            text = text.rsplit(separator,1)
+        if reverse == False:
+            text = text.split(separator,1)
+        
+        if len(text) == 2:
+            if return_half == "First Half":
+                text = text[0]
+            if return_half == "Second Half":
+                text = text[1]
+
+        return (text,)
 
 NODE_CLASS_MAPPINGS = {
     "Loader":Loader,
@@ -1012,17 +1044,13 @@ NODE_CLASS_MAPPINGS = {
     "LoadEmbedding": LoadEmbedding,
     "ConditionText": ConditionText, 
     "ConditionTextMulti": ConditionTextMulti, 
-
     "Textbox":Textbox,
-
-
-
     "ImageSizeInfo" : ImageSizeInfo,
     "ImageSimpleResize" : ImageSimpleResize,
     "ImageAddText" : ImageAddText,
-
     "Int2String": Int2String,
     "LoadImageExtended": LoadImageExtended,
     "SeedGenerator" : SeedGenerator,
     "SaveImages":SaveImages,
+    "TextSplit": TextSplit,
 }
