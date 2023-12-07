@@ -92,3 +92,13 @@ To install, download the repository to the custom_nodes directory:
 cd custom_nodes
 git clone https://github.com/chibiace/ComfyUI-Chibi-Nodes/
 ```
+
+## Notes
+
+If you want to see latent image previews in ComfyUI's Sampler nodes append the following when launching the server 
+
+```
+--preview-method auto
+
+eg. python main.py --preview-method auto
+```
