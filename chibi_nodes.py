@@ -23,7 +23,7 @@ base_path = os.path.dirname(os.path.realpath(__file__))
 extras_dir = os.path.join(base_path, "extras")
 
 folder_paths.folder_names_and_paths["chibi-wildcards"] = ([os.path.join(extras_dir, "chibi-wildcards")], {".txt"})
-folder_paths.folder_names_and_paths["fonts"] = ([os.path.join(extras_dir, "fonts")], {".ttf"})
+folder_paths.folder_names_and_paths["chibi-fonts"] = ([os.path.join(extras_dir, "fonts")], {".ttf"})
 
 
 
@@ -948,7 +948,7 @@ class ImageAddText:
             "required":{
 
                 "text": ("STRING",{"default":"Chibi-Nodes","multiline":True},),
-                "font" : [sorted(folder_paths.get_filename_list("fonts"))],
+                "font" : [sorted(folder_paths.get_filename_list("chibi-fonts"))],
                 "font_size":("INT",{"default": 24, "min": 0, "max": 200, "step": 1}),
                 "font_colour":(["black","white","red","green","blue"],),
                 "invert_mask":([False,True],),
@@ -981,7 +981,7 @@ class ImageAddText:
 
             msg = text
             imaget.fontmode = 'L'
-            fnt = ImageFont.truetype(folder_paths.get_full_path("fonts", font), font_size)
+            fnt = ImageFont.truetype(folder_paths.get_full_path("chibi-fonts", font), font_size)
 
             imaget.text((position_x,position_y),msg,font=fnt,fill=font_colour)
 
@@ -1035,6 +1035,47 @@ class TextSplit:
 
         return (text,)
 
+
+class RandomResolutionLatent:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required":{
+                "batch_size": ("INT", {"default": 1, "min": 1, "max": 4096}),
+            },}
+    RETURN_TYPES = ("LATENT","INT","INT",)
+    RETURN_NAMES = ("LATENT","width","height",)
+    OUTPUT_NODE = True
+    FUNCTION = "randres"
+    CATEGORY = "Chibi-Nodes/Numbers"
+
+    def IS_CHANGED(s):
+        random.seed()
+
+    def randres(self,batch_size):
+        resolutions = [512,768,1024]
+
+        res_list = []
+
+        for x in resolutions:
+            for y in resolutions:
+                a = (x,y)
+                b = (y,x)
+                if not a in res_list:
+                    res_list.append(a)
+                if not b in res_list:
+                    res_list.append(b)
+
+
+        rand_res = random.choice(res_list)  
+        latent = torch.zeros([batch_size, 4, rand_res[0]//8, rand_res[1]//8])
+
+
+        return({"samples":latent},rand_res[0],rand_res[1],)
+    
 NODE_CLASS_MAPPINGS = {
     "Loader":Loader,
     "SimpleSampler" : SimpleSampler,
@@ -1053,4 +1094,5 @@ NODE_CLASS_MAPPINGS = {
     "SeedGenerator" : SeedGenerator,
     "SaveImages":SaveImages,
     "TextSplit": TextSplit,
+    "RandomResolutionLatent": RandomResolutionLatent,
 }
