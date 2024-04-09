@@ -245,8 +245,11 @@ class LoadEmbedding:
 
         output = text + ", (embedding:" + embedding + ":" + str(weight) + ")"
 
-        if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png")):
-            img_path = folder_paths.get_full_path("embeddings", embedding).replace(".pt",".preview.png") 
+        file_path = folder_paths.get_full_path("embeddings", embedding)
+        file_ext = file_path.split(".", 1)[1]
+
+        if os.path.exists(folder_paths.get_full_path("embeddings", embedding).replace(f".{file_ext}", ".preview.png")):
+            img_path = folder_paths.get_full_path("embeddings", embedding).replace(f".{file_ext}",".preview.png") 
             image = Image.open(img_path)
             image = ImageOps.exif_transpose(image)
             image = image.convert("RGB")
