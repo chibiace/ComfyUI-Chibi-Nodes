@@ -1,0 +1,14 @@
+[project]
+name = "comfyui-chibi-nodes"
+description = "Nodes:Loader, Prompts, ImageTool, Wildcards, LoadEmbedding, ConditionText, SaveImages, ..."
+version = "1.0.0"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/chibiace/ComfyUI-Chibi-Nodes"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-Chibi-Nodes"
+Icon = ""
