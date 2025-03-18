@@ -56,7 +56,12 @@ class LoadImageExtended:
     def load_image(self, image, vae=None):
 
         image_path = folder_paths.get_annotated_filepath(image)
-        filename = image_path.rsplit("/", 1)[-1]
+
+        # Check if os is windows for backwards paths.
+        if os.name == "nt":
+            filename = image_path.rsplit("\\", 1)[-1]
+        else:
+            filename = image_path.rsplit("/", 1)[-1]
 
         im = Image.open(image_path)
 
