@@ -11,12 +11,12 @@ There is also a workflow JSON with these two examples included in the examples d
 
 ### Wildcards
 
-![Screenshot1](https://github.com/chibiace/ComfyUI-Chibi-Nodes/blob/main/screenshot1.png)
+![Screenshot1](https://github.com/chibiace/ComfyUI-Chibi-Nodes/blob/master/screenshot1.png)
 
 
 ### Image Information and Manipulation
 
-![Screenshot2](https://github.com/chibiace/ComfyUI-Chibi-Nodes/blob/main/screenshot2.png)
+![Screenshot2](https://github.com/chibiace/ComfyUI-Chibi-Nodes/blob/master/screenshot2.png)
 
 
 ## Installation
